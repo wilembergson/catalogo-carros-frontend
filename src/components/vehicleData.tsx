@@ -45,15 +45,16 @@ export default function VehicleData(){
     )
 }
 
-const Button = styled.button`
-    width: 110px;
+export const Button = styled.button`
+    width: fit-content;
     color: #fff;
     background: #3f73b8;
     border: none;
     border-radius: 5px;
     font-size: 25px;
     font-family: 'Roboto', sans-serif;
-    padding: 10px;
+    padding: 10px 20px;
+    margin-top: 40px;
     cursor: pointer;
     :hover{
         background: #589af0;

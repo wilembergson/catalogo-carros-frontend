@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Header from "./components/Header"
 import UserContext from "./context/UserContext"
 import InitialPage from "./pages/InitialPage"
+import Login from "./pages/Login"
 
 function App() {
   const [selectedVehicle, setSelectedVehicle] = useState<number>(0)
@@ -14,6 +15,7 @@ function App() {
         <Header/>
         <Routes>
           <Route path="/" element={<InitialPage/>}/>
+          <Route path="/login" element={<Login/>}/>
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
