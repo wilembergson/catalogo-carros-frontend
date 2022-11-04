@@ -39,10 +39,22 @@ async function newVehicle(data:VehicleInsertData){
         }
     )
 }
+
+async function deleteVehicle(id:number){
+    return await axios.delete(`${BASE_URL}/vehicles/${id}`, 
+        {
+            headers:{
+                authorization:`Bearer ${token}`
+            }
+        }
+    )
+}
+
 const api = {
     listVehicles,
     getVehicleById,
     login,
-    newVehicle
+    newVehicle,
+    deleteVehicle
 }
 export default api

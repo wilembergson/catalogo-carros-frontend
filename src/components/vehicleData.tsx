@@ -5,6 +5,7 @@ import UserContext from "../context/UserContext"
 import api from "../api/apiConnections"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { FaRegEdit } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
 
 type Vehicle = {
     id: number
@@ -17,6 +18,7 @@ type Vehicle = {
 
 export default function VehicleData(){
     const { selectedVehicle, setSelectedVehicle, logged } = useContext(UserContext)
+    const navigate = useNavigate()
     const initialVehicle:Vehicle = {
         id:0,
         name:'',
@@ -27,6 +29,15 @@ export default function VehicleData(){
     }
     const [vehicle, setVehicle] = useState<Vehicle>(initialVehicle)
 
+    async function deleteVehicle(){
+        try{
+            await api.deleteVehicle(selectedVehicle)
+            window.location.reload()
+        }catch(error:any){
+            alert(error.response.data.error)
+        }
+    }
+
     useEffect(() => {
         const promise = api.getVehicleById(selectedVehicle)
         promise.then(response => setVehicle(response.data))
@@ -34,7 +45,7 @@ export default function VehicleData(){
 
     return(
         <Content>
-            <Title>Detalhes do veículo</Title>
+            <Title>Detalhes do veículo {selectedVehicle}</Title>
             <VehicleContent>
                 <DataContainer>
                     <Image src={vehicle.picture}/>
@@ -46,7 +57,7 @@ export default function VehicleData(){
                 {logged ? 
                     <IconsContainer>
                         <FaRegEdit onClick={() => alert("Editar")} size={'40px'} cursor={'pointer'}/>
-                        <RiDeleteBin6Line onClick={() => alert("deletar")} size={'40px'} cursor={'pointer'}/>
+                        <RiDeleteBin6Line onClick={() => deleteVehicle()} size={'40px'} cursor={'pointer'}/>
                     </IconsContainer>
                     : <></>
                 }
