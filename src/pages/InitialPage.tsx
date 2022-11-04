@@ -1,21 +1,20 @@
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+
 import api from "../api/apiConnections"
 import SearchBar from "../components/SearchBar"
 import Vehicle from "../components/vehicle"
 import VehicleData, { Button } from "../components/vehicleData"
 import UserContext from "../context/UserContext"
-import { getToken } from "../utils/checkAuthentication"
 
 export default function InitialPage(){
     const [vehicles, setVehicles] = useState<any[]>([])
     const { selectedVehicle } = useContext(UserContext)
-    const [authenticated, setAuthenticated] = useState<string|null>(null)
+    const { logged } = useContext(UserContext)
     const navigate = useNavigate()
 
     useEffect(() => {
-        setAuthenticated(getToken)
         const promise = api.listVehicles()
         promise.then(response => setVehicles(response.data))
     }, [selectedVehicle])
@@ -26,7 +25,7 @@ export default function InitialPage(){
                 <>
                     <SearchBar/>
                     <Title>CARROS USADOS</Title>
-                    { authenticated ? 
+                    { logged ? 
                         <ButtonContainer>
                             <Button onClick={() => navigate("/register-car")}>+ Adicionar carro</Button>
                         </ButtonContainer> : <></>

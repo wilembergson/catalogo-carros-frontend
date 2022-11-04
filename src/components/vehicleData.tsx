@@ -3,6 +3,8 @@ import styled from "styled-components"
 
 import UserContext from "../context/UserContext"
 import api from "../api/apiConnections"
+import { RiDeleteBin6Line } from "react-icons/ri"
+import { FaRegEdit } from "react-icons/fa"
 
 type Vehicle = {
     id: number
@@ -14,7 +16,7 @@ type Vehicle = {
 }
 
 export default function VehicleData(){
-    const { selectedVehicle, setSelectedVehicle } = useContext(UserContext)
+    const { selectedVehicle, setSelectedVehicle, logged } = useContext(UserContext)
     const initialVehicle:Vehicle = {
         id:0,
         name:'',
@@ -34,11 +36,20 @@ export default function VehicleData(){
         <Content>
             <Title>Detalhes do veículo</Title>
             <VehicleContent>
-                <Image src={vehicle.picture}/>
-                <VehicleNamePrice>
-                    <Name>{vehicle.name} {vehicle.brand} {vehicle.model}</Name>
-                    <Price>R$ {vehicle.price}</Price>
-                </VehicleNamePrice>
+                <DataContainer>
+                    <Image src={vehicle.picture}/>
+                    <VehicleNamePrice>
+                        <Name>{vehicle.name} {vehicle.brand} {vehicle.model}</Name>
+                        <Price>R$ {vehicle.price}</Price>
+                    </VehicleNamePrice>
+                </DataContainer>
+                {logged ? 
+                    <IconsContainer>
+                        <FaRegEdit onClick={() => alert("Editar")} size={'40px'} cursor={'pointer'}/>
+                        <RiDeleteBin6Line onClick={() => alert("deletar")} size={'40px'} cursor={'pointer'}/>
+                    </IconsContainer>
+                    : <></>
+                }
             </VehicleContent>
             <Button onClick={() => setSelectedVehicle(0)}>Voltar</Button>
         </Content>
@@ -67,6 +78,7 @@ const Content = styled.div`
 `
 const VehicleContent = styled.section`
     display: flex;
+    justify-content: space-between;
     width: 100%;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     margin-bottom: 30px;
@@ -79,8 +91,7 @@ export const Title = styled.label`
     width: 70%;
     font-size: 25px;
     font-weight: 300;
-    margin: 30px 0;
-    
+    margin: 30px 0;   
 `
 const VehicleNamePrice = styled.div`
     display: flex;
@@ -101,4 +112,13 @@ const Price = styled.label`
     font-weight: 500;
     color: #6e6eec;
     font-family: 'Roboto', sans-serif;
+`
+const IconsContainer = styled.div`
+    display: flex;
+    color: #3f73b8;
+    margin: 10px;
+`
+const DataContainer = styled.div`
+    display: flex;
+    width: 95%;
 `

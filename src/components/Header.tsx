@@ -2,27 +2,20 @@ import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 
 import logo from "../assets/logo.png"
-import { useEffect, useState } from "react"
-import { getToken } from "../utils/checkAuthentication"
+import { useContext, useEffect, useState } from "react"
+import UserContext from "../context/UserContext"
 
 
 export default function Header(){
     const navigate = useNavigate()
-    const [logged, setLogged] = useState<boolean>(false)
-    
+    const { logged } = useContext(UserContext)
+
     function logout(){
         localStorage.clear()
         navigate("/")
         window.location.reload()
     }
-    useEffect(() => {
-        if(getToken()){
-            setLogged(true)
-        }else{
-            setLogged(false)
-        }
-    }, [])
-
+    
     return(
         <HeaderBody>
             <Content>
