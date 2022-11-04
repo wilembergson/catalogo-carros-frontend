@@ -1,10 +1,9 @@
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 import api, { VehicleInsertData } from "../api/apiConnections"
-import { Button, Title } from "../components/vehicleData"
-import { Form, Input, Label } from "./Login"
+import { Button, ButtonCancel, Form, Input, Label, Title } from "../components/SharedStyles"
 
 export default function RegisterForm(props?:any){
     const { update, id, dataUpdate, setEditing } = props
@@ -115,21 +114,6 @@ const Content = styled.div`
     width: 70%;
     height: 700px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-`
-export const ButtonCancel = styled.button`
-    width: fit-content;
-    color: #fff;
-    background: #b83f3f;
-    border: none;
-    border-radius: 5px;
-    font-size: 25px;
-    font-family: 'Roboto', sans-serif;
-    padding: 10px 20px;
-    margin-top: 40px;
-    cursor: pointer;
-    :hover{
-        background: #ec5d5d;
-    }
 `
 const ButtonsContainer = styled.div`
     display: flex;

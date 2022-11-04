@@ -4,8 +4,9 @@ import styled from "styled-components"
 
 import api from "../api/apiConnections"
 import SearchBar from "../components/SearchBar"
+import { Button } from "../components/SharedStyles"
 import Vehicle from "../components/vehicle"
-import VehicleData, { Button } from "../components/vehicleData"
+import VehicleData from "../components/vehicleData"
 import UserContext from "../context/UserContext"
 
 export default function InitialPage(){
@@ -53,7 +54,7 @@ const VehiclesContainer = styled.div`
     width: 70%;
     margin-top: 20px;
 `
-export const Title = styled.label`
+const Title = styled.label`
     width: 70%;
     font-size: 15px;
     font-weight: 400;

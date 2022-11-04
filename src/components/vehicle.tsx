@@ -3,7 +3,7 @@ import styled from "styled-components"
 import UserContext from "../context/UserContext"
 
 export default function Vehicle(props:any){
-    const { selectedVehicle, setSelectedVehicle } = useContext(UserContext)
+    const { setSelectedVehicle } = useContext(UserContext)
     const { data } = props
 
     return(

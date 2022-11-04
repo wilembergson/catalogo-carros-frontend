@@ -6,6 +6,7 @@ import api, { VehicleInsertData } from "../api/apiConnections"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { FaRegEdit } from "react-icons/fa"
 import RegisterForm from "../pages/RegisterForm"
+import { Button, Title } from "./SharedStyles"
 
 type Vehicle = {
     id: number
@@ -60,7 +61,7 @@ export default function VehicleData(){
 
     return(
         <Content>
-            <Title>Detalhes do veículo {selectedVehicle}</Title>
+            <Title>Detalhes do veículo</Title>
             <VehicleContent>
                 <DataContainer>
                     <Image src={vehicle.picture}/>
@@ -89,21 +90,6 @@ export default function VehicleData(){
     )
 }
 
-export const Button = styled.button`
-    width: fit-content;
-    color: #fff;
-    background: #3f73b8;
-    border: none;
-    border-radius: 5px;
-    font-size: 25px;
-    font-family: 'Roboto', sans-serif;
-    padding: 10px 20px;
-    margin-top: 40px;
-    cursor: pointer;
-    :hover{
-        background: #589af0;
-    }
-`
 const Content = styled.div`
     display: flex;
     flex-direction: column;
@@ -120,12 +106,6 @@ const VehicleContent = styled.section`
 const Image = styled.img`
     width: 30%;
     height: 270px;
-`
-export const Title = styled.label`
-    width: 70%;
-    font-size: 25px;
-    font-weight: 300;
-    margin: 30px 0;   
 `
 const VehicleNamePrice = styled.div`
     display: flex;
