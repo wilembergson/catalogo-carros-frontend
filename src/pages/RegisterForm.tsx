@@ -1,18 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import api from "../api/apiConnections"
+import api, { VehicleInsertData } from "../api/apiConnections"
 import { Button, Title } from "../components/vehicleData"
 import { erroMessage } from "../utils/toasts"
 import { Form, Input, Label } from "./Login"
-
-type VehicleInsertData = {
-    name: string;
-    brand: string;
-    model: string;
-    price: string;
-    picture: string;
-}
 
 export default function RegisterForm(){
     const initialData:VehicleInsertData = {
@@ -32,21 +24,20 @@ export default function RegisterForm(){
 
     async function handleSubmit(e:any){
         e.preventDefault()
-        const login = {...formData}
+        const vehicle = {...formData}
         try{
-            /*const {data} = await api.login(login)
-            localStorage.setItem("token", data.token)
-            navigate("/")*/
-            window.location.reload()
+            await api.newVehicle(vehicle)
+            navigate("/")
         }catch(error:any){
-            erroMessage(error.response.data.error)
+            alert(error.response.data.error)
         }
     }
+
     return(
         <Body>
             <Title>Adicionar carro</Title>
             <Content>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <Label>Nome</Label>
                     <Input
                             placeholder="Nome"
