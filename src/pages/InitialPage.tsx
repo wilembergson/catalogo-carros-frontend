@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import api from "../api/apiConnections"
 import SearchBar from "../components/SearchBar"
@@ -11,6 +12,7 @@ export default function InitialPage(){
     const [vehicles, setVehicles] = useState<any[]>([])
     const { selectedVehicle } = useContext(UserContext)
     const [authenticated, setAuthenticated] = useState<string|null>(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setAuthenticated(getToken)
@@ -26,7 +28,7 @@ export default function InitialPage(){
                     <Title>CARROS USADOS</Title>
                     { authenticated ? 
                         <ButtonContainer>
-                            <Button>+ Adicionar carro</Button>
+                            <Button onClick={() => navigate("/register-car")}>+ Adicionar carro</Button>
                         </ButtonContainer> : <></>
                     }
                     <VehiclesContainer>
@@ -52,7 +54,7 @@ const VehiclesContainer = styled.div`
     width: 70%;
     margin-top: 20px;
 `
-const Title = styled.label`
+export const Title = styled.label`
     width: 70%;
     font-size: 15px;
     font-weight: 400;

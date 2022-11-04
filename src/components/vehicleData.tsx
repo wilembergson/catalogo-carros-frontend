@@ -75,7 +75,7 @@ const Image = styled.img`
     width: 30%;
     height: 270px;
 `
-const Title = styled.label`
+export const Title = styled.label`
     width: 70%;
     font-size: 25px;
     font-weight: 300;

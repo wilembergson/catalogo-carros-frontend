@@ -86,12 +86,12 @@ const LoginContent = styled.div`
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     margin-top: 100px;
 `
-const Title = styled.h1`
+export const Title = styled.h1`
     color: #6e6eec;
     font-size: 40px;
     font-family: 'Raleway', sans-serif;
 `
-const Form = styled.form`
+export const Form = styled.form`
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -100,7 +100,7 @@ const Form = styled.form`
   margin-top: 10px;
   margin-bottom: 30px;
 `
-const Input = styled.input`
+export const Input = styled.input`
     all: unset;
     box-sizing: border-box;
     font-family: 'Lexend Deca', sans-serif;
@@ -115,7 +115,7 @@ const Input = styled.input`
       color: #686565;
     }
 `
-const Label = styled.label`
+export const Label = styled.label`
   width: 100%;
   font-style: normal;
   font-weight: 400;
