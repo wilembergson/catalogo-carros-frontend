@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 
 import UserContext from "../context/UserContext"
-import api from "../api/apiConnections"
+import api, { VehicleInsertData } from "../api/apiConnections"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { FaRegEdit } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
+import RegisterForm from "../pages/RegisterForm"
 
 type Vehicle = {
     id: number
@@ -18,7 +18,6 @@ type Vehicle = {
 
 export default function VehicleData(){
     const { selectedVehicle, setSelectedVehicle, logged } = useContext(UserContext)
-    const navigate = useNavigate()
     const initialVehicle:Vehicle = {
         id:0,
         name:'',
@@ -28,6 +27,8 @@ export default function VehicleData(){
         picture:''
     }
     const [vehicle, setVehicle] = useState<Vehicle>(initialVehicle)
+    const [dataToChange, setDataToChange] = useState<VehicleInsertData>()
+    const [editing, setEditing] = useState<boolean>(false)
 
     async function deleteVehicle(){
         try{
@@ -38,10 +39,24 @@ export default function VehicleData(){
         }
     }
 
+    function changeEditing(){
+        if(editing){
+            setEditing(false)
+        }else{
+            setDataToChange({
+                name:vehicle.name,
+                brand:vehicle.brand,
+                model: vehicle.model,
+                price: vehicle.price.toString(),
+                picture: vehicle.picture
+            })
+            setEditing(true)
+        }
+    }
     useEffect(() => {
         const promise = api.getVehicleById(selectedVehicle)
         promise.then(response => setVehicle(response.data))
-    }, [])
+    }, [vehicle])
 
     return(
         <Content>
@@ -56,12 +71,19 @@ export default function VehicleData(){
                 </DataContainer>
                 {logged ? 
                     <IconsContainer>
-                        <FaRegEdit onClick={() => alert("Editar")} size={'40px'} cursor={'pointer'}/>
+                        <FaRegEdit onClick={() => changeEditing()} size={'40px'} cursor={'pointer'}/>
                         <RiDeleteBin6Line onClick={() => deleteVehicle()} size={'40px'} cursor={'pointer'}/>
                     </IconsContainer>
                     : <></>
                 }
             </VehicleContent>
+            {editing ? 
+                <RegisterForm  update={true}
+                                id={vehicle.id}
+                                dataUpdate={dataToChange}
+                                setEditing={setEditing}/> 
+                : <></>
+            }
             <Button onClick={() => setSelectedVehicle(0)}>Voltar</Button>
         </Content>
     )
@@ -86,6 +108,7 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     width: 70%;
+    margin-bottom: 60px;
 `
 const VehicleContent = styled.section`
     display: flex;

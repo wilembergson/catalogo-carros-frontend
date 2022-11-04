@@ -4,10 +4,10 @@ import styled from "styled-components"
 
 import api, { VehicleInsertData } from "../api/apiConnections"
 import { Button, Title } from "../components/vehicleData"
-import UserContext from "../context/UserContext"
 import { Form, Input, Label } from "./Login"
 
-export default function RegisterForm(){
+export default function RegisterForm(props?:any){
+    const { update, id, dataUpdate, setEditing } = props
     const initialData:VehicleInsertData = {
         name: '',
         brand: '',
@@ -16,7 +16,7 @@ export default function RegisterForm(){
         picture: ''
     }
     const navigate = useNavigate()
-    const [formData, setFormData] = useState(initialData)
+    const [formData, setFormData] = useState(update ? dataUpdate : initialData)
 
     function handleChange(e:any) {
         e.preventDefault()
@@ -27,16 +27,22 @@ export default function RegisterForm(){
         e.preventDefault()
         const vehicle = {...formData}
         try{
-            await api.newVehicle(vehicle)
-            navigate("/")
+            if(update){
+                await api.updateVehicle(id, vehicle)
+                setEditing(false)
+            }else{
+                await api.newVehicle(vehicle)
+                navigate("/")
+            }
         }catch(error:any){
             alert(error.response.data.error)
+            console.log(error.response.data)
         }
     }
 
     return(
         <Body>
-            <Title>Adicionar carro</Title>
+            <Title>{update ? "Atualizar dados" : "Adicionar carro"}</Title>
             <Content>
                 <Form onSubmit={handleSubmit}>
                     <Label>Nome</Label>
@@ -86,7 +92,9 @@ export default function RegisterForm(){
                     />
                     <ButtonsContainer>
                         <Button>Salvar</Button>
-                        <ButtonCancel onClick={() => navigate("/")}>Cancelar</ButtonCancel>
+                        <ButtonCancel onClick={() => { update ? setEditing(false) : navigate("/")}}>
+                            Cancelar
+                        </ButtonCancel>
                     </ButtonsContainer>
                     
                 </Form>
