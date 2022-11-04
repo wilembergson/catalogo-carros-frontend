@@ -1,10 +1,13 @@
+import { useContext } from "react"
 import styled from "styled-components"
+import UserContext from "../context/UserContext"
 
 export default function Vehicle(props:any){
+    const { selectedVehicle, setSelectedVehicle } = useContext(UserContext)
     const { data } = props
 
     return(
-        <Body>
+        <Body onClick={() => setSelectedVehicle(data.id)}>
             <Image src={data.picture}/>
             <Name>{data.name} {data.brand} {data.model}</Name>
             <Price>R$ {data.price}</Price>

@@ -1,22 +1,33 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import api from "../api/apiConnections"
+import SearchBar from "../components/SearchBar"
 import Vehicle from "../components/vehicle"
+import VehicleData from "../components/vehicleData"
+import UserContext from "../context/UserContext"
 
 export default function InitialPage(){
-    const [vehicles, setVehicles] = useState<any[] | null>([])
+    const [vehicles, setVehicles] = useState<any[]>([])
+    const { selectedVehicle } = useContext(UserContext)
 
     useEffect(() => {
-        const promise = api.lisVehicles()
+        const promise = api.listVehicles()
         promise.then(response => setVehicles(response.data))
-    }, [])
+    }, [selectedVehicle])
 
     return(
         <Main>
-            <Title>CARROS USADOS</Title>
-            <VehiclesContainer>
-                {vehicles?.map(item => <Vehicle data={item}/>)}
-            </VehiclesContainer>
+            {selectedVehicle === 0 ?
+                <>
+                    <SearchBar/>
+                    <Title>CARROS USADOS</Title>
+                    <VehiclesContainer>
+                        {vehicles?.map(item => <Vehicle data={item}/>)}
+                    </VehiclesContainer>
+                </>
+                : <VehicleData/>
+            }
+            
         </Main>
     )
 }

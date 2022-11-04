@@ -13,6 +13,7 @@ const SearchBody = styled.div`
     justify-content: center;
     align-items: center;
     background: #3f73b8;
+    width: 100%;
     height: 50px;
     padding: 8px;
 `
